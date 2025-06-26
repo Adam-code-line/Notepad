@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>添加记录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+    <style>
+        body {
+            background: #f9f9f9;
+            margin: 0;
+            font-family: "微软雅黑", Arial, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header {
+            text-align: center;
+            font-size: 48px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        form {
+            background: #fff;
+            padding: 40px 0 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            max-width: 900px;
+        }
+        .form-label {
+            flex: 0 0 120px;
+            text-align: right;
+            margin-right: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+        .form-control, .form-select, textarea {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .form-control:focus, .form-select:focus, textarea:focus {
+            border-color: #409eff;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+        .form-btn {
+            width: 100%;
+            padding: 14px 0;
+            background: #409eff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+        .form-btn:hover {
+            background: #3078c6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">添加记录</div>
+        <form method="post" action="/account">
+            <div class="form-group">
+                <label class="form-label" for="item">事项</label>
+                <input class="form-control" type="text" id="item" name="item" autocomplete="off" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="date">发生时间</label>
+                <input class="form-control" type="text" id="date" name="date" required readonly placeholder="请选择日期">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="type">类型</label>
+                <select class="form-select" id="type" name="type" required>
+                    <option value="-1">支出</option>
+                    <option value="1">收入</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="amount">金额</label>
+                <input class="form-control" type="number" id="amount" name="amount" step="0.01" min="0" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="note">备注</label>
+                <textarea id="note" name="note" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="form-btn">添加</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+    <script>
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#date',
+                trigger: 'click',
+                lang: 'zh'
+            });
+        });
+    </script>
+</body>
+</html>

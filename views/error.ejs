@@ -1,0 +1,20 @@
+<h1>
+    <%= typeof msg !=='undefined' ? msg : '发生错误' %>
+</h1>
+<p>
+    <%= typeof error !=='undefined' ? error : '' %>
+</p>
+<p><a href="/">Go back to home</a></p>
+<% if (typeof error !=='undefined' && error && error.stack) { %>
+    <pre><%= error.stack %></pre>
+    <% } %>
+        <% if (typeof error !=='undefined' && error && error.message) { %>
+            <p><strong>Error Message:</strong>
+                <%= error.message %>
+            </p>
+            <% } %>
+                <% if (typeof error !=='undefined' && error && error.code) { %>
+                    <p><strong>Error Code:</strong>
+                        <%= error.code %>
+                    </p>
+                    <% } %>
