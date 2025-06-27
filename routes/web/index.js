@@ -4,13 +4,20 @@ const router = express.Router();
 
 const monment = require('moment');
 const AccountModel = require('../../models/BookModel');
+const Note = require('../../models/NoteModel');
 
 //导入中间件检测登录
 const checkloginMiddleware = require('../../middlewares/checkloginMiddleware')
 
 //设置首页
-router.get('/', function (req, res, next) {
-  res.redirect('/account');
+router.get('/home', checkloginMiddleware, async function (req, res, next) {
+  try {
+    const data = await AccountModel.find().sort({date: -1}).exec();
+    const notes = await Note.find().sort({ date: -1 });
+    res.render('list', { accounts: data, notes, monment: monment });
+  } catch (err) {
+    res.status(500).render('error', { msg: '查询失败了~~~', error: err });
+  }
 });
 
 //记事本的列表
@@ -18,7 +25,7 @@ router.get('/account', checkloginMiddleware, async function(req, res, next) {
 
   try {
     const data = await AccountModel.find().sort({date: -1}).exec();
-    res.render('list', { accounts: data ,monment: monment });
+    res.render('list', { accounts: data, notes: [], monment: monment });
   } catch (err) {
     res.status(500).render('error', { msg: '查询失败了~~~', error: err });
   }

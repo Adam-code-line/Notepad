@@ -63,7 +63,7 @@ router.post('/login', function(req, res, next) {
             // 登录成功，设置session
             req.session.userId = user._id;
             req.session.username = username;
-            res.render('success', { msg: '登录成功！', url: '/account' });
+            res.render('success', { msg: '登录成功！', url: '/home' });
         })
         .catch(err => {
             console.error('登录出错:');

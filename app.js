@@ -13,6 +13,9 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const authApiRouter = require('./routes/api/auth');
 
+//导入note路由接口
+const noteRouter = require('./routes/web/note');
+
 //导入配置项
 const { DBHOST, DBPORT, DBNAME } = require('./config/config');
 
@@ -49,6 +52,12 @@ app.use('/api', accountRouter); // 使用account路由接口
 app.use('/', authRouter); // 使用注册路由接口
 app.use('/api', authApiRouter);
 
+// 使用note路由接口
+app.use('/note', noteRouter);
+
+const moment = require('moment');
+app.locals.moment = moment;
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   //响应404
@@ -64,6 +73,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/', (req, res) => {
+  res.redirect('/home');
 });
 
 module.exports = app;
